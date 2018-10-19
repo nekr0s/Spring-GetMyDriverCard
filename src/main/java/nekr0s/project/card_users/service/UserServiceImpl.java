@@ -1,5 +1,6 @@
 package nekr0s.project.card_users.service;
 
+import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.User;
 import nekr0s.project.card_users.repositories.base.UserRepository;
 import nekr0s.project.card_users.service.base.UserService;
@@ -19,17 +20,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return this.userRepository.getAll();
+        return this.userRepository.getAllUsers();
+    }
+
+    @Override
+    public List<Request> getAllUserRequests() {
+        return this.userRepository.getAllUserRequests();
     }
 
     @Override
     public User getUserById(int id) {
         return this.userRepository.getById(id);
-    }
-
-    @Override
-    public List<User> getByStatus(boolean isActive) {
-        return userRepository.getByStatus(isActive);
     }
 
     @Override
@@ -45,5 +46,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(int id) {
         userRepository.delete(id);
+    }
+
+    @Override
+    public List<Request> getSpecificUserRequest(int userId) {
+        return userRepository.getSpecificUserRequests(userId);
     }
 }

@@ -1,5 +1,6 @@
 package nekr0s.project.card_users.repositories;
 
+import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.User;
 import nekr0s.project.card_users.repositories.base.UserRepository;
 import org.hibernate.Session;
@@ -31,10 +32,39 @@ public class SQLUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<Request> getSpecificUserRequests(int userId) {
+        List<Request> requests;
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            requests = session.createQuery("from Request where user.userId = :paramId")
+                    .setParameter("paramId", userId)
+                    .list();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        return requests;
+    }
+
+    @Override
+    public List<Request> getAllUserRequests() {
+        List result;
+        try(Session session = sessionFactory.openSession()){
+            session.beginTransaction();
+            result = session.createQuery("From Request").list();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
         List<User> result = new ArrayList<>();
         try (
-                Session session = sessionFactory.openSession();
+                Session session = sessionFactory.openSession()
         ) {
             session.beginTransaction();
             result = session.createQuery("from User").list();
@@ -63,20 +93,6 @@ public class SQLUserRepository implements UserRepository {
         return result;
     }
 
-    @Override
-    public List<User> getByStatus(boolean isActive) {
-        List<User> result = new ArrayList<>();
-        try (
-                Session session = sessionFactory.openSession();
-        ) {
-            session.beginTransaction();
-            result = session.createQuery("from User where isActive = :isActive")
-                    .setParameter("isActive", isActive)
-                    .list();
-            session.getTransaction().commit();
-        }
-        return result;
-    }
 
     @Override
     public void update(int id, User user) {
