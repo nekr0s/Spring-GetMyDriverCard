@@ -17,9 +17,18 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    public User(String email, String password) {
+    @OneToOne
+    @JoinColumn(name = "UsersEGN", referencedColumnName = "EGN")
+    private UserInfo userInfo;
+
+    public User(String email, String password, UserInfo userInfo) {
         this.email = email;
         this.password = password;
+        this.userInfo = userInfo;
+    }
+
+    public User() {
+        // keep empty
     }
 
     public int getUserId() {
@@ -46,5 +55,11 @@ public class User {
         this.password = password;
     }
 
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
 
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 }

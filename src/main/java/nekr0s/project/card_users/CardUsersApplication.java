@@ -1,6 +1,8 @@
 package nekr0s.project.card_users;
 
+import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.User;
+import nekr0s.project.card_users.models.UserInfo;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +20,8 @@ public class CardUsersApplication {
         return new org.hibernate.cfg.Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Request.class)
+                .addAnnotatedClass(UserInfo.class)
                 .buildSessionFactory();
     }
 }
