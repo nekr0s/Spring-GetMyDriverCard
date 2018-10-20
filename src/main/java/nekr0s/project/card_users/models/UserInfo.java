@@ -1,16 +1,17 @@
 package nekr0s.project.card_users.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_info")
 public class UserInfo {
     @Id
-    @Column(name = "EGN")
-    private long egn;
+    @Column(name = "UserInfoID")
+    private int userInfoID;
+
+    @OneToOne
+    @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "UserID")
+    private User userInfoUser;
 
     @Column(name = "FirstName")
     private String firstName;
@@ -60,9 +61,12 @@ public class UserInfo {
     @Column(name = "DateOfExpiryPrevious")
     private String dateOfExpiryPrevious;
 
-    public UserInfo(long egn, String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
+    @Column(name = "EGN")
+    private String egn;
+
+    public UserInfo(User userInfoUser, String egn, String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
                     String personalNumber, String address, String phoneNumber, String dateOfBirth) {
-        this.egn = egn;
+        this.userInfoUser = userInfoUser;
         this.firstName = firstName;
         this.firstNameCyrillic = firstNameCyrillic;
         this.lastName = lastName;
@@ -71,6 +75,7 @@ public class UserInfo {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        this.egn = egn;
     }
 
     public UserInfo() {
@@ -79,11 +84,11 @@ public class UserInfo {
 
     // Getters and setters
 
-    public long getEgn() {
+    public String getEgn() {
         return egn;
     }
 
-    public void setEgn(long egn) {
+    public void setEgn(String egn) {
         this.egn = egn;
     }
 
@@ -213,5 +218,21 @@ public class UserInfo {
 
     public void setDateOfExpiryPrevious(String dateOfExpiryPrevious) {
         this.dateOfExpiryPrevious = dateOfExpiryPrevious;
+    }
+
+    public int getUserInfoID() {
+        return userInfoID;
+    }
+
+    public void setUserInfoID(int userInfoID) {
+        this.userInfoID = userInfoID;
+    }
+
+    public User getUserInfoUser() {
+        return userInfoUser;
+    }
+
+    public void setUserInfoUser(User userInfoUser) {
+        this.userInfoUser = userInfoUser;
     }
 }

@@ -20,7 +20,7 @@ public class Request {
     private String requestDate;
 
     @ManyToOne
-    @JoinColumn(name = "RequestsUserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "Requests_UserID", referencedColumnName = "UserID")
     private User user;
 
     public Request(String requestType, String requestStatus, String requestDate, User user) {

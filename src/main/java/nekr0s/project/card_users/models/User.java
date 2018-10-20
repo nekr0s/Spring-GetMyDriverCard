@@ -2,6 +2,8 @@ package nekr0s.project.card_users.models;
 
 import javax.persistence.*;
 
+// Small changes
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -17,14 +19,9 @@ public class User {
     @Column(name = "Password")
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "UsersEGN", referencedColumnName = "EGN")
-    private UserInfo userInfo;
-
-    public User(String email, String password, UserInfo userInfo) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.userInfo = userInfo;
     }
 
     public User() {
@@ -53,13 +50,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
     }
 }

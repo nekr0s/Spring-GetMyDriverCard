@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// Validation in the back end
+
 @RestController
 @RequestMapping("api/users")
 public class UserRestController {
