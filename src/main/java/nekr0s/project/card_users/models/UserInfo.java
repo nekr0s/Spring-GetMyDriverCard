@@ -1,11 +1,16 @@
 package nekr0s.project.card_users.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_info")
 public class UserInfo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserInfoID")
     private int userInfoID;
 
@@ -14,55 +19,77 @@ public class UserInfo {
     private User userInfoUser;
 
     @Column(name = "FirstName")
+    @NotNull
+    @Size(min = 3, max = 256)
     private String firstName;
 
     @Column(name = "FirstNameCyrillic")
+    @Size(min = 3, max = 256)
     private String firstNameCyrillic;
 
     @Column(name = "LastName")
+    @NotNull
+    @Size(min = 3, max = 30)
     private String lastName;
 
     @Column(name = "LastNameCyrillic")
+    @Size(min = 3, max = 30)
     private String lastNameCyrillic;
 
     @Column(name = "PersonalNumber")
+    @NotNull
     private String personalNumber;
 
     @Column(name = "Address")
+    @NotNull
     private String address;
 
     @Column(name = "PhoneNumber")
+    @NotNull
     private String phoneNumber;
 
+    @Column(name = "EGN")
+    @NotNull
+    @Pattern(regexp = "\\d{10}") // 10 digits only
+    private String egn;
+
     @Column(name = "DateOfBirth")
+    @Pattern(regexp = "^\\d+(\\.\\d+)*$")
+    @Size(min = 10, max = 10)
     private String dateOfBirth;
 
     @Column(name = "Reason")
-    private String reason;
+    @Max(700)
+    private int reason;
 
     @Column(name = "EuIssuerCountry")
+    @Size(min = 3, max = 25)
     private String euIssuerCountry;
 
     @Column(name = "TcardNumber")
+    @Pattern(regexp = "\\d{20}")
     private String tCardNumber;
 
     @Column(name = "DriverLicenseIssuerCountry")
+    @Size(min = 3, max = 35)
     private String driverLicenseIssuerCountry;
 
     @Column(name = "DriverLicenseNumber")
+    @Size(min = 3, max = 20)
     private String driverLicenseNumber;
 
     @Column(name = "CountryOfIssuing")
+    @Size(min = 3, max = 35)
     private String countryOfIssuing;
 
     @Column(name = "IssuingAuthority")
+    @Size(min = 3, max = 45)
     private String issuingAuthority;
 
     @Column(name = "DateOfExpiryPrevious")
+    @Pattern(regexp = "^\\d+(\\.\\d+)*$")
+    @Size(min = 10, max = 10)
     private String dateOfExpiryPrevious;
-
-    @Column(name = "EGN")
-    private String egn;
 
     public UserInfo(User userInfoUser, String egn, String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
                     String personalNumber, String address, String phoneNumber, String dateOfBirth) {
@@ -156,11 +183,11 @@ public class UserInfo {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getReason() {
+    public int getReason() {
         return reason;
     }
 
-    public void setReason(String reason) {
+    public void setReason(int reason) {
         this.reason = reason;
     }
 

@@ -1,8 +1,8 @@
 package nekr0s.project.card_users.models;
 
 import javax.persistence.*;
-
-// Small changes
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -14,9 +14,12 @@ public class User {
     private int userId;
 
     @Column(name = "Email")
+    @NotNull(message = "Email can't be null")
+    @Email(message = "Invalid email address")
     private String email;
 
     @Column(name = "Password")
+    @NotNull(message = "Password can't be null")
     private String password;
 
     public User(String email, String password) {

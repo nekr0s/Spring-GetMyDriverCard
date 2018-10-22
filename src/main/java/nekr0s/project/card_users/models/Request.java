@@ -1,6 +1,10 @@
 package nekr0s.project.card_users.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "requests")
@@ -11,19 +15,26 @@ public class Request {
     private int requestId;
 
     @Column(name = "RequestType")
-    private String requestType;
+    @NotNull
+    @Max(40)
+    private int requestType;
 
     @Column(name = "RequestStatus")
-    private String requestStatus;
+    @NotNull
+    @Max(3)
+    private int requestStatus;
 
     @Column(name = "RequestDate")
+    @NotNull
+    @Pattern(regexp = "^\\d+(\\.\\d+)*$")
+    @Size(min = 10, max = 10)
     private String requestDate;
 
     @ManyToOne
     @JoinColumn(name = "Requests_UserID", referencedColumnName = "UserID")
     private User user;
 
-    public Request(String requestType, String requestStatus, String requestDate, User user) {
+    public Request(int requestType, int requestStatus, String requestDate, User user) {
         this.requestType = requestType;
         this.requestStatus = requestStatus;
         this.requestDate = requestDate;
@@ -34,19 +45,19 @@ public class Request {
         // keep empty
     }
 
-    public String getRequestType() {
+    public @NotNull @Max(40) int getRequestType() {
         return requestType;
     }
 
-    public void setRequestType(String requestType) {
+    public void setRequestType(int requestType) {
         this.requestType = requestType;
     }
 
-    public String getRequestStatus() {
+    public @NotNull @Max(3) int getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(String requestStatus) {
+    public void setRequestStatus(int requestStatus) {
         this.requestStatus = requestStatus;
     }
 
