@@ -38,7 +38,7 @@ public class UserInfo {
 
     @Column(name = "PersonalNumber")
     @NotNull
-    @Pattern(regexp = "^[0-9]*$")
+    @Pattern(regexp = "^\\d{3,20}$")
     private String personalNumber;
 
     @Column(name = "Address")
@@ -63,7 +63,7 @@ public class UserInfo {
     private String euIssuerCountry;
 
     @Column(name = "TcardNumber")
-    @Pattern(regexp = "\\d{20}")
+    @Pattern(regexp = "^\\d{3,20}$")
     private String tCardNumber;
 
     @Column(name = "DriverLicenseIssuerCountry")
