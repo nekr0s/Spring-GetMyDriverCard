@@ -38,6 +38,7 @@ public class UserInfo {
 
     @Column(name = "PersonalNumber")
     @NotNull
+    @Pattern(regexp = "^[0-9]*$")
     private String personalNumber;
 
     @Column(name = "Address")
@@ -47,11 +48,6 @@ public class UserInfo {
     @Column(name = "PhoneNumber")
     @NotNull
     private String phoneNumber;
-
-    @Column(name = "EGN")
-    @NotNull
-    @Pattern(regexp = "\\d{10}") // 10 digits only
-    private String egn;
 
     @Column(name = "DateOfBirth")
     @Pattern(regexp = "^\\d+(\\.\\d+)*$")
@@ -102,7 +98,6 @@ public class UserInfo {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
-        this.egn = egn;
     }
 
     public UserInfo() {
@@ -111,13 +106,6 @@ public class UserInfo {
 
     // Getters and setters
 
-    public String getEgn() {
-        return egn;
-    }
-
-    public void setEgn(String egn) {
-        this.egn = egn;
-    }
 
     public String getFirstName() {
         return firstName;
