@@ -3,6 +3,7 @@ package nekr0s.project.card_users.models;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,13 +23,20 @@ public class User {
     @NotNull(message = "Password can't be null")
     private String password;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "UserID")
+            , inverseJoinColumns = @JoinColumn(name = "RoleID"))
+    private Set<Role> roles;
 
     public User() {
         // keep empty
+    }
+
+    public User(User user) {
+        this.userId = user.getUserId();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.roles = user.getRoles();
     }
 
     public int getUserId() {
@@ -53,5 +61,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

@@ -6,10 +6,11 @@ import nekr0s.project.card_users.models.UserInfo;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CardUsersApplication {
+public class CardUsersApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(CardUsersApplication.class, args);

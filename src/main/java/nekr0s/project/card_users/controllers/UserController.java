@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/users")
-public class UserRestController {
+public class UserController {
     private UserService service;
 
     @Autowired
-    public UserRestController(UserService service) {
+    public UserController(UserService service) {
         this.service = service;
     }
 
@@ -39,18 +39,13 @@ public class UserRestController {
         service.update(id, user);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        service.delete(id);
-    }
-
-    @GetMapping("/{userId}/requests")
-    public void getSpecificUserRequests(@PathVariable int userId) {
-        service.getSpecificUserRequest(userId);
-    }
-
-    @GetMapping("/requests")
-    public void getAllRequests() {
-        service.getAllUserRequests();
-    }
+//    @GetMapping("/{userId}/requests")
+//    public void getSpecificUserRequests(@PathVariable int userId) {
+//        service.getSpecificUserRequest(userId);
+//    }
+//
+//    @GetMapping("/requests")
+//    public void getAllRequests() {
+//        service.getAllUserRequests();
+//    }
 }
