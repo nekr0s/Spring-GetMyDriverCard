@@ -1,31 +1,50 @@
 package nekr0s.project.card_users.security;
 
+import nekr0s.project.card_users.repositories.base.UserRepository;
+import nekr0s.project.card_users.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Configuration
+@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthenticationEntryPoint authEntryPoint;
+    private CustomUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .anyRequest().authenticated()
-                .and().httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("**/secured**").authenticated()
+                .anyRequest().permitAll()
+                .and()
+                .formLogin().permitAll();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("alexanderrusev@abv.bg")
-                .password("$2a$04$pFBxeP/JC/vuFCQxzMAv4.P3mG59yUvqg3xqFYkmYtFFWC8C4Kkgm").roles("ADMIN");
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(getPasswordEncoder());
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+    }
+
+    private PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
