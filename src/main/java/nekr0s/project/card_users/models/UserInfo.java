@@ -15,7 +15,7 @@ public class UserInfo {
     private int userInfoID;
 
     @OneToOne
-    @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "user_id")
+    @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "UserID")
     private User userInfoUser;
 
     @Column(name = "FirstName")

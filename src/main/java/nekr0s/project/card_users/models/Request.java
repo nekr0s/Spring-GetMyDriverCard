@@ -33,7 +33,7 @@ public class Request {
     private Attachment attachment;
 
     @ManyToOne
-    @JoinColumn(name = "Requests_UserID", referencedColumnName = "user_id")
+    @JoinColumn(name = "Requests_UserID", referencedColumnName = "UserID")
     private User user;
 
     public Request(int requestType, int requestStatus, String requestDate, User user) {

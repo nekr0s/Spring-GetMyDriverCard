@@ -28,6 +28,11 @@ public class CustomNamingStrategy extends ImprovedNamingStrategy {
         return firstLetterToUpper(columnName);
     }
 
+    @Override
+    public String joinKeyColumnName(String joinedColumn, String joinedTable) {
+        return columnName(joinedColumn);
+    }
+
     private String firstLetterToUpper(String input) {
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }

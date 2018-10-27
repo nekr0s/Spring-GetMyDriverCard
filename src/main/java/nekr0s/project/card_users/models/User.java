@@ -11,7 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "UserID")
     private int id;
 
     @Column(name = "Email")
@@ -24,8 +24,8 @@ public class User {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "UserID"),
+            inverseJoinColumns = @JoinColumn(name = "RoleID"))
     private Set<Role> roles;
 
     public User() {
