@@ -28,13 +28,12 @@ public class Request {
     @Size(min = 16, max = 16)
     private String requestDate;
 
-    @Column(name = "Requests_AttachmentID")
     @OneToOne
     @JoinColumn(name = "Requests_AttachmentID", referencedColumnName = "AttachmentID")
     private Attachment attachment;
 
     @ManyToOne
-    @JoinColumn(name = "Requests_UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "Requests_UserID", referencedColumnName = "user_id")
     private User user;
 
     public Request(int requestType, int requestStatus, String requestDate, User user) {

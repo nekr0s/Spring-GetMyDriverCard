@@ -31,9 +31,10 @@ dependencies {
     // Hibernate
     compile group: 'org.hibernate', name: 'hibernate-gradle-plugin', version: '5.3.2.Final'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.3.7.Final'
 
     // Jpa
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.1.RELEASE'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 
     // Security
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.1.1.RELEASE'

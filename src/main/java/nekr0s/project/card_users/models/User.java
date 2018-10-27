@@ -11,8 +11,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private int userId;
+    @Column(name = "user_id")
+    private int id;
 
     @Column(name = "Email")
     @NotNull(message = "Email can't be null")
@@ -24,8 +24,8 @@ public class User {
     private String password;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "UserID")
-            , inverseJoinColumns = @JoinColumn(name = "RoleID"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -33,18 +33,18 @@ public class User {
     }
 
     public User(User user) {
-        this.userId = user.getUserId();
+        this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.roles = user.getRoles();
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int userId) {
+        this.id = userId;
     }
 
     public String getEmail() {

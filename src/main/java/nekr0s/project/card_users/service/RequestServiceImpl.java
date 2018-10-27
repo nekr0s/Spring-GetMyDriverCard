@@ -1,7 +1,7 @@
 package nekr0s.project.card_users.service;
 
 import nekr0s.project.card_users.models.Request;
-import nekr0s.project.card_users.repositories.base.RequestRepository;
+import nekr0s.project.card_users.repositories.RequestRepository;
 import nekr0s.project.card_users.service.base.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,26 +11,30 @@ import java.util.List;
 @Service
 public class RequestServiceImpl implements RequestService {
 
+    private final RequestRepository requestRepository;
+
     @Autowired
-    private RequestRepository requestRepository;
+    public RequestServiceImpl(RequestRepository requestRepository) {
+        this.requestRepository = requestRepository;
+    }
 
     @Override
     public Request getRequestById(int id) {
-        return requestRepository.getRequestById(id);
+        return requestRepository.getByRequestId(id);
     }
 
     @Override
     public List<Request> getUserRequests(int userId) {
-        return getUserRequests(userId);
+        return requestRepository.getAllByUserId(userId);
     }
 
     @Override
     public List<Request> getAllRequests() {
-        return requestRepository.getAllRequests();
+        return requestRepository.findAll();
     }
 
     @Override
     public void updateRequestStatus(int requestId, int requestStatus) {
-        requestRepository.updateRequestStatus(requestId, requestStatus);
+        requestRepository.setRequestStatusById(requestId, requestStatus);
     }
 }

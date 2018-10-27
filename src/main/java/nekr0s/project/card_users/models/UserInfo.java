@@ -15,7 +15,7 @@ public class UserInfo {
     private int userInfoID;
 
     @OneToOne
-    @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "user_id")
     private User userInfoUser;
 
     @Column(name = "FirstName")
@@ -54,8 +54,8 @@ public class UserInfo {
     @Size(min = 10, max = 10)
     private String dateOfBirth;
 
-    @Column(name = "Reason")
-    @Max(700)
+    @Column(name = "RequestReason")
+    @Max(100)
     private int reason;
 
     @Column(name = "EuIssuerCountry")
