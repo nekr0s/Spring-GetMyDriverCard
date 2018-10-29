@@ -5,6 +5,7 @@ import nekr0s.project.card_users.service.base.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,11 @@ public class RequestController {
     @GetMapping("/secured/all")
     public List<Request> getAllRequests() {
         return requestService.getAllRequests();
+    }
+
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("/secured/{userId}/all")
+    public List<Request> getAllRequests(@PathVariable int userId) {
+        return requestService.getUserRequests(userId);
     }
 }

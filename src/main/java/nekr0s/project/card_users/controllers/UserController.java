@@ -4,11 +4,9 @@ import nekr0s.project.card_users.models.User;
 import nekr0s.project.card_users.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 // Validation in the back end
@@ -23,6 +21,7 @@ public class UserController {
         this.service = service;
     }
 
+
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/secured/all")
     public List getUsers() {
@@ -34,4 +33,12 @@ public class UserController {
     public User getUserById(@PathVariable int id) {
         return service.getUserByUserId(id);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @GetMapping("/me")
+    public @ResponseBody
+    User getCurrentUser(Principal principal) {
+        return (User) service.loadUserByUsername(principal.getName());
+    }
+
 }
