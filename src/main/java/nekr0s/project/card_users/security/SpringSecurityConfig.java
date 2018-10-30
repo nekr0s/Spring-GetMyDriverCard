@@ -33,7 +33,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("**/secured/**")
                 .hasRole("ADMIN")
                 .anyRequest()
-                .hasRole("USER").and()
+                .hasRole("USER")
+                .and()
                 .httpBasic();
     }
 
@@ -45,7 +46,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers("/api/users/signup");
     }
 
     private PasswordEncoder getPasswordEncoder() {

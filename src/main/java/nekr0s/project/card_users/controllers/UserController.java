@@ -41,4 +41,10 @@ public class UserController {
         return (User) service.loadUserByUsername(principal.getName());
     }
 
+    @ResponseBody
+    @PostMapping("/signup")
+    public User registerUser(@RequestBody User user) {
+        return service.registerUser(user);
+    }
+
 }
