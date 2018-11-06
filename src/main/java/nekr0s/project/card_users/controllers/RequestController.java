@@ -1,15 +1,20 @@
 package nekr0s.project.card_users.controllers;
 
-import nekr0s.project.card_users.models.Request;
-import nekr0s.project.card_users.service.base.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import nekr0s.project.card_users.models.Request;
+import nekr0s.project.card_users.models.clientmodel.ClientRequest;
+import nekr0s.project.card_users.service.base.RequestService;
 
 @RestController
 @RequestMapping("api/requests")
@@ -32,5 +37,18 @@ public class RequestController {
     @GetMapping("/secured/{userId}/all")
     public List<Request> getAllRequests(@PathVariable int userId) {
         return requestService.getUserRequests(userId);
+    }
+
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("/{requestId}")
+    public Request getRequestById(@PathVariable int requestId) {
+        return requestService.getRequestById(requestId);
+    }
+
+    @PreAuthorize("hasAnyRole('USER')")
+    @PostMapping(consumes = "application/json")
+    @ResponseBody
+    public ClientRequest submitRequest(@RequestBody ClientRequest request) {
+        return requestService.submitRequest(request);
     }
 }

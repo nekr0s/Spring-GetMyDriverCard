@@ -1,7 +1,11 @@
 package nekr0s.project.card_users.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "attachments")
@@ -9,29 +13,25 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AttachmentID")
-    private int attatchmentId;
+    private int attachmentId;
 
     @Column(name = "Faceshot")
-    @NotNull
-    private byte[] faceShot;
+    private String faceShot;
 
     @Column(name = "IDShot")
-    @NotNull
-    private byte[] idShot;
+    private String idShot;
 
     @Column(name = "Signature")
-    @NotNull
-    private byte[] signature;
+    private String signature;
 
     @Column(name = "DriverLicense")
-    @NotNull
-    private byte[] driverLicense;
+    private String driverLicense;
 
     @Column(name = "PreviousTachCard")
-    private byte[] previousTachCard;
+    private String previousTachCard;
 
     @Column(name = "PreviousEUCard")
-    private byte[] previousEuCard;
+    private String previousEuCard;
 
     public Attachment() {
         // keep empty
@@ -39,59 +39,59 @@ public class Attachment {
 
     // getters and setters
 
-    public int getAttatchmentId() {
-        return attatchmentId;
+    public int getAttachmentId() {
+        return attachmentId;
     }
 
-    public void setAttatchmentId(int attatchmentId) {
-        this.attatchmentId = attatchmentId;
+    public void setAttachmentId(int attachmentId) {
+        this.attachmentId = attachmentId;
     }
 
-    public byte[] getFaceShot() {
+    public String getFaceShot() {
         return faceShot;
     }
 
-    public void setFaceShot(byte[] faceShot) {
+    public void setFaceShot(String faceShot) {
         this.faceShot = faceShot;
     }
 
-    public byte[] getIdShot() {
+    public String getIdShot() {
         return idShot;
     }
 
-    public void setIdShot(byte[] idShot) {
+    public void setIdShot(String idShot) {
         this.idShot = idShot;
     }
 
-    public byte[] getSignature() {
+    public String getSignature() {
         return signature;
     }
 
-    public void setSignature(byte[] signature) {
+    public void setSignature(String signature) {
         this.signature = signature;
     }
 
-    public byte[] getDriverLicense() {
+    public String getDriverLicense() {
         return driverLicense;
     }
 
-    public void setDriverLicense(byte[] driverLicense) {
+    public void setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
     }
 
-    public byte[] getPreviousTachCard() {
+    public String getPreviousTachCard() {
         return previousTachCard;
     }
 
-    public void setPreviousTachCard(byte[] previousTachCard) {
+    public void setPreviousTachCard(String previousTachCard) {
         this.previousTachCard = previousTachCard;
     }
 
-    public byte[] getPreviousEuCard() {
+    public String getPreviousEuCard() {
         return previousEuCard;
     }
 
-    public void setPreviousEuCard(byte[] previousEuCard) {
+    public void setPreviousEuCard(String previousEuCard) {
         this.previousEuCard = previousEuCard;
     }
 }

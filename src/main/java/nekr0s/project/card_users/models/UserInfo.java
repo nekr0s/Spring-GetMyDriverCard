@@ -1,7 +1,14 @@
 package nekr0s.project.card_users.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -14,7 +21,7 @@ public class UserInfo {
     @Column(name = "UserInfoID")
     private int userInfoID;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "UserInfo_UserID", referencedColumnName = "UserID")
     private User userInfoUser;
 
@@ -54,10 +61,6 @@ public class UserInfo {
     @Size(min = 10, max = 10)
     private String dateOfBirth;
 
-    @Column(name = "RequestReason")
-    @Max(100)
-    private int reason;
-
     @Column(name = "EuIssuerCountry")
     @Size(min = 3, max = 25)
     private String euIssuerCountry;
@@ -87,8 +90,13 @@ public class UserInfo {
     @Size(min = 10, max = 10)
     private String dateOfExpiryPrevious;
 
-    public UserInfo(User userInfoUser, String egn, String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
-                    String personalNumber, String address, String phoneNumber, String dateOfBirth) {
+    @Column(name = "Email")
+    @NotNull
+    @Email
+    private String email;
+
+    public UserInfo(User userInfoUser, String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
+                    String personalNumber, String address, String phoneNumber, String dateOfBirth, @NotNull @Email String email) {
         this.userInfoUser = userInfoUser;
         this.firstName = firstName;
         this.firstNameCyrillic = firstNameCyrillic;
@@ -98,6 +106,7 @@ public class UserInfo {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.dateOfBirth = dateOfBirth;
+        this.email = email;
     }
 
     public UserInfo() {
@@ -171,14 +180,6 @@ public class UserInfo {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getReason() {
-        return reason;
-    }
-
-    public void setReason(int reason) {
-        this.reason = reason;
-    }
-
     public String getEuIssuerCountry() {
         return euIssuerCountry;
     }
@@ -249,5 +250,13 @@ public class UserInfo {
 
     public void setUserInfoUser(User userInfoUser) {
         this.userInfoUser = userInfoUser;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

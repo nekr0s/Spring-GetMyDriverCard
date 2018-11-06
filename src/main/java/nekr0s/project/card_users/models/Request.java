@@ -1,9 +1,23 @@
 package nekr0s.project.card_users.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import nekr0s.project.card_users.models.clientmodel.ClientRequest;
+import nekr0s.project.card_users.models.enums.RequestReason;
+import nekr0s.project.card_users.models.enums.RequestStatus;
+import nekr0s.project.card_users.models.enums.RequestType;
 
 @Entity
 @Table(name = "requests")
@@ -15,28 +29,32 @@ public class Request {
 
     @Column(name = "RequestType")
     @NotNull
-    @Max(40)
-    private int requestType;
+    @Enumerated(value = EnumType.STRING)
+    private RequestType requestType;
 
     @Column(name = "RequestStatus")
     @NotNull
-    @Max(3)
-    private int requestStatus;
+    @Enumerated(value = EnumType.STRING)
+    private RequestStatus requestStatus;
+
+    @Column(name = "RequestReason")
+    @Enumerated(value = EnumType.STRING)
+    private RequestReason requestReason;
 
     @Column(name = "RequestDate")
     @NotNull
-    @Size(min = 16, max = 16)
+    @Size(max = 30)
     private String requestDate;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "Requests_AttachmentID", referencedColumnName = "AttachmentID")
     private Attachment attachment;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "Requests_UserID", referencedColumnName = "UserID")
     private User user;
 
-    public Request(int requestType, int requestStatus, String requestDate, User user) {
+    public Request(@NotNull RequestType requestType, @NotNull RequestStatus requestStatus, String requestDate, User user) {
         this.requestType = requestType;
         this.requestStatus = requestStatus;
         this.requestDate = requestDate;
@@ -47,19 +65,28 @@ public class Request {
         // keep empty
     }
 
-    public @NotNull @Max(40) int getRequestType() {
+    public Request(ClientRequest clientRequest) {
+        this.requestId = clientRequest.getRequestId();
+        this.requestDate = clientRequest.getRequestDate();
+        this.attachment = clientRequest.getAttachment();
+        this.requestType = clientRequest.getType();
+        this.requestStatus = clientRequest.getStatus();
+        this.user = new User(clientRequest.getUser());
+    }
+
+    public @NotNull RequestType getRequestType() {
         return requestType;
     }
 
-    public void setRequestType(int requestType) {
+    public void setRequestType(@NotNull RequestType requestType) {
         this.requestType = requestType;
     }
 
-    public @NotNull @Max(3) int getRequestStatus() {
+    public @NotNull RequestStatus getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(int requestStatus) {
+    public void setRequestStatus(@NotNull RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
 
@@ -85,5 +112,21 @@ public class Request {
 
     public void setRequestId(int requestId) {
         this.requestId = requestId;
+    }
+
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
+
+    public RequestReason getRequestReason() {
+        return requestReason;
+    }
+
+    public void setRequestReason(RequestReason requestReason) {
+        this.requestReason = requestReason;
     }
 }

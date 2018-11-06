@@ -1,9 +1,21 @@
 package nekr0s.project.card_users.models;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import nekr0s.project.card_users.models.clientmodel.ClientUser;
 
 @Entity
 @Table(name = "users")
@@ -14,10 +26,9 @@ public class User {
     @Column(name = "UserID")
     private int id;
 
-    @Column(name = "Email")
-    @NotNull(message = "Email can't be null")
-    @Email(message = "Invalid email address")
-    private String email;
+    @Column(name = "Username")
+    @NotNull(message = "Username can't be null")
+    private String username;
 
     @Column(name = "Password")
     @NotNull(message = "Password can't be null")
@@ -32,11 +43,18 @@ public class User {
         // keep empty
     }
 
-    public User(User user) {
+    User(User user) {
         this.id = user.getId();
-        this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.roles = user.getRoles();
+    }
+
+    public User(ClientUser clientUser) {
+        this.id = clientUser.getId();
+        this.password = clientUser.getPassword();
+        this.roles = clientUser.getRoles();
+        this.username = clientUser.getUsername();
     }
 
     public int getId() {
@@ -47,12 +65,12 @@ public class User {
         this.id = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

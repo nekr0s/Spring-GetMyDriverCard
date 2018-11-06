@@ -1,13 +1,21 @@
 package nekr0s.project.card_users.controllers;
 
-import nekr0s.project.card_users.models.User;
-import nekr0s.project.card_users.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
+
+import nekr0s.project.card_users.exception.UserAlreadyExistAuthenticationException;
+import nekr0s.project.card_users.models.User;
+import nekr0s.project.card_users.service.CustomUserDetailsService;
 
 // Validation in the back end
 
@@ -43,7 +51,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public User registerUser(@RequestBody User user) {
+    public User registerUser(@RequestBody User user) throws UserAlreadyExistAuthenticationException {
         return service.registerUser(user);
     }
 
