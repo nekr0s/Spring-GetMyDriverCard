@@ -3,12 +3,16 @@ package nekr0s.project.card_users.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.User;
 import nekr0s.project.card_users.models.UserInfo;
 import nekr0s.project.card_users.models.clientmodel.ClientRequest;
+import nekr0s.project.card_users.models.clientmodel.ClientUser;
+import nekr0s.project.card_users.models.clientmodel.ClientUserInfo;
+import nekr0s.project.card_users.models.enums.RequestStatus;
 import nekr0s.project.card_users.repositories.AttachmentRepository;
 import nekr0s.project.card_users.repositories.RequestRepository;
 import nekr0s.project.card_users.repositories.UserInfoRepository;
@@ -31,24 +35,40 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Request getRequestById(int id) {
-        return requestRepository.getByRequestId(id);
+    public ClientRequest getRequestById(int id) {
+        Request request = requestRepository.getByRequestId(id);
+        ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository
+                .findByUserInfoUserId(request.getUser().getId()));
+        ClientUser clientUser = new ClientUser(clientUserInfo);
+        return new ClientRequest(request, clientUser);
     }
 
     @Override
-    public List<Request> getUserRequests(int userId) {
-        return requestRepository.getAllByUserId(userId);
+    public List<ClientRequest> getUserRequests(int userId) {
+        List<ClientRequest> clientRequests = new ArrayList<>();
+        for (Request request : requestRepository.getAllByUserId(userId)) {
+            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository.findByUserInfoUserId(userId));
+            ClientUser clientUser = new ClientUser(clientUserInfo);
+            clientRequests.add(new ClientRequest(request, clientUser));
+        }
+        return clientRequests;
     }
 
     @Override
-    public List<Request> getAllRequests() {
-        return requestRepository.findAll();
+    public List<ClientRequest> getAllRequests() {
+        List<ClientRequest> clientRequests = new ArrayList<>();
+        for (Request request : requestRepository.findAll()) {
+            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository
+                    .findByUserInfoUserId(request.getUser().getId()));
+            ClientUser clientUser = new ClientUser(clientUserInfo);
+            clientRequests.add(new ClientRequest(request, clientUser));
+        }
+        return clientRequests;
     }
 
     @Override
     public ClientRequest submitRequest(ClientRequest request) {
-        UserInfo userInfo = request.getUser().getUserInfo();
-        userInfo.setUserInfoUser(new User(request.getUser()));
+        UserInfo userInfo = new UserInfo(request.getUser().getUserInfo(), new User(request.getUser()));
         Request realRequest = new Request(request);
         attachmentRepository.save(realRequest.getAttachment());
         userInfoRepository.save(userInfo);
@@ -57,7 +77,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public void updateRequestStatus(int requestId, int requestStatus) {
+    public void updateRequestStatus(int requestId, RequestStatus requestStatus) {
         requestRepository.setRequestStatusById(requestId, requestStatus);
     }
 }

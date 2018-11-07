@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.clientmodel.ClientRequest;
 import nekr0s.project.card_users.service.base.RequestService;
 
@@ -29,19 +28,19 @@ public class RequestController {
 
     @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/secured/all")
-    public List<Request> getAllRequests() {
+    public List<ClientRequest> getAllRequests() {
         return requestService.getAllRequests();
     }
 
     @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/secured/{userId}/all")
-    public List<Request> getAllRequests(@PathVariable int userId) {
+    public List<ClientRequest> getAllRequests(@PathVariable int userId) {
         return requestService.getUserRequests(userId);
     }
 
     @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/{requestId}")
-    public Request getRequestById(@PathVariable int requestId) {
+    public ClientRequest getRequestById(@PathVariable int requestId) {
         return requestService.getRequestById(requestId);
     }
 

@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import nekr0s.project.card_users.models.clientmodel.ClientUserInfo;
+
 @Entity
 @Table(name = "user_info")
 public class UserInfo {
@@ -111,6 +113,19 @@ public class UserInfo {
 
     public UserInfo() {
         // keep empty
+    }
+
+    public UserInfo(ClientUserInfo clientUserInfo, User user) {
+        this.userInfoUser = user;
+        this.firstName = clientUserInfo.getFirstName();
+        this.firstNameCyrillic = clientUserInfo.getFirstNameCyrillic();
+        this.lastName = clientUserInfo.getLastName();
+        this.lastNameCyrillic = clientUserInfo.getLastNameCyrillic();
+        this.personalNumber = clientUserInfo.getPersonalNumber();
+        this.address = clientUserInfo.getAddress();
+        this.phoneNumber = clientUserInfo.getPhoneNumber();
+        this.dateOfBirth = clientUserInfo.getDateOfBirth();
+        this.email = clientUserInfo.getEmail();
     }
 
     // Getters and setters

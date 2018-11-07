@@ -2,17 +2,17 @@ package nekr0s.project.card_users.service.base;
 
 import java.util.List;
 
-import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.clientmodel.ClientRequest;
+import nekr0s.project.card_users.models.enums.RequestStatus;
 
 public interface RequestService {
-    Request getRequestById(int id);
+    ClientRequest getRequestById(int id);
 
-    List<Request> getUserRequests(int userId);
+    List<ClientRequest> getUserRequests(int userId);
 
-    List<Request> getAllRequests();
+    List<ClientRequest> getAllRequests();
 
     ClientRequest submitRequest(ClientRequest request);
 
-    void updateRequestStatus(int requestId, int requestStatus);
+    void updateRequestStatus(int requestId, RequestStatus requestStatus);
 }

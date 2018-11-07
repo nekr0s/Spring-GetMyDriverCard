@@ -3,6 +3,7 @@ package nekr0s.project.card_users.models.clientmodel;
 import javax.validation.constraints.NotNull;
 
 import nekr0s.project.card_users.models.Attachment;
+import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.enums.RequestReason;
 import nekr0s.project.card_users.models.enums.RequestStatus;
 import nekr0s.project.card_users.models.enums.RequestType;
@@ -10,8 +11,8 @@ import nekr0s.project.card_users.models.enums.RequestType;
 public class ClientRequest {
 
     private int requestId;
-    private RequestStatus status;
-    private RequestType type;
+    private RequestStatus requestStatus;
+    private RequestType requestType;
     private RequestReason requestReason;
     private String requestDate;
     private Attachment attachment;
@@ -24,12 +25,22 @@ public class ClientRequest {
     public ClientRequest(int requestId, RequestStatus requestStatus, RequestType requestType, RequestReason requestReason, String requestDate,
                          Attachment requestAttachment, ClientUser requestClientUser) {
         this.requestId = requestId;
-        this.status = requestStatus;
-        this.type = requestType;
+        this.requestStatus = requestStatus;
+        this.requestType = requestType;
         this.requestReason = requestReason;
         this.requestDate = requestDate;
         this.attachment = requestAttachment;
         this.user = requestClientUser;
+    }
+
+    public ClientRequest(Request request, ClientUser user) {
+        this.requestId = request.getRequestId();
+        this.requestStatus = request.getRequestStatus();
+        this.requestType = request.getRequestType();
+        this.requestReason = request.getRequestReason();
+        this.requestDate = request.getRequestDate();
+        this.attachment = request.getAttachment();
+        this.user = user;
     }
 
     public int getRequestId() {
@@ -40,20 +51,20 @@ public class ClientRequest {
         this.requestId = requestId;
     }
 
-    public @NotNull RequestStatus getStatus() {
-        return status;
+    public @NotNull RequestStatus getRequestStatus() {
+        return requestStatus;
     }
 
-    public void setStatus(RequestStatus status) {
-        this.status = status;
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
-    public @NotNull RequestType getType() {
-        return type;
+    public @NotNull RequestType getRequestType() {
+        return requestType;
     }
 
-    public void setType(RequestType type) {
-        this.type = type;
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType;
     }
 
     public String getRequestDate() {

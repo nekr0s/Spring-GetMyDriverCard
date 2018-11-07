@@ -69,8 +69,8 @@ public class Request {
         this.requestId = clientRequest.getRequestId();
         this.requestDate = clientRequest.getRequestDate();
         this.attachment = clientRequest.getAttachment();
-        this.requestType = clientRequest.getType();
-        this.requestStatus = clientRequest.getStatus();
+        this.requestType = clientRequest.getRequestType();
+        this.requestStatus = clientRequest.getRequestStatus();
         this.user = new User(clientRequest.getUser());
     }
 

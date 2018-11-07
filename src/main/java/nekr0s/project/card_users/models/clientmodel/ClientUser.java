@@ -5,22 +5,22 @@ import nekr0s.project.card_users.models.UserInfo;
 
 public class ClientUser extends User {
 
-    private UserInfo userInfo;
+    private ClientUserInfo userInfo;
 
     public ClientUser() {
 
     }
 
-    public ClientUser(UserInfo userInfo) {
+    public ClientUser(ClientUserInfo userInfo) {
         super();
         this.userInfo = userInfo;
     }
 
-    public UserInfo getUserInfo() {
+    public ClientUserInfo getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
+    public void setUserInfo(ClientUserInfo userInfo) {
         this.userInfo = userInfo;
     }
 }
