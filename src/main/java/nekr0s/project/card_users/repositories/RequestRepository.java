@@ -18,5 +18,5 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 
     @Modifying
     @Query("update Request r set r.requestStatus = ?1 where r.requestId = ?2")
-    void setRequestStatusById(int status, RequestStatus requestStatus);
+    void setRequestStatusById(int requestId, RequestStatus requestStatus);
 }
