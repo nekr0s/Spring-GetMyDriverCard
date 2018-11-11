@@ -63,35 +63,6 @@ public class UserInfo {
     @Size(min = 10, max = 10)
     private String dateOfBirth;
 
-    @Column(name = "EuIssuerCountry")
-    @Size(min = 3, max = 25)
-    private String euIssuerCountry;
-
-    @Column(name = "TcardNumber")
-    @Pattern(regexp = "^\\d{3,20}$")
-    private String tCardNumber;
-
-    @Column(name = "DriverLicenseIssuerCountry")
-    @Size(min = 3, max = 35)
-    private String driverLicenseIssuerCountry;
-
-    @Column(name = "DriverLicenseNumber")
-    @Size(min = 3, max = 20)
-    private String driverLicenseNumber;
-
-    @Column(name = "CountryOfIssuing")
-    @Size(min = 3, max = 35)
-    private String countryOfIssuing;
-
-    @Column(name = "IssuingAuthority")
-    @Size(min = 3, max = 45)
-    private String issuingAuthority;
-
-    @Column(name = "DateOfExpiryPrevious")
-    @Pattern(regexp = "^\\d+(\\.\\d+)*$")
-    @Size(min = 10, max = 10)
-    private String dateOfExpiryPrevious;
-
     @Column(name = "Email")
     @NotNull
     @Email
@@ -193,62 +164,6 @@ public class UserInfo {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEuIssuerCountry() {
-        return euIssuerCountry;
-    }
-
-    public void setEuIssuerCountry(String euIssuerCountry) {
-        this.euIssuerCountry = euIssuerCountry;
-    }
-
-    public String gettCardNumber() {
-        return tCardNumber;
-    }
-
-    public void settCardNumber(String tCardNumber) {
-        this.tCardNumber = tCardNumber;
-    }
-
-    public String getDriverLicenseIssuerCountry() {
-        return driverLicenseIssuerCountry;
-    }
-
-    public void setDriverLicenseIssuerCountry(String driverLicenseIssuerCountry) {
-        this.driverLicenseIssuerCountry = driverLicenseIssuerCountry;
-    }
-
-    public String getDriverLicenseNumber() {
-        return driverLicenseNumber;
-    }
-
-    public void setDriverLicenseNumber(String driverLicenseNumber) {
-        this.driverLicenseNumber = driverLicenseNumber;
-    }
-
-    public String getCountryOfIssuing() {
-        return countryOfIssuing;
-    }
-
-    public void setCountryOfIssuing(String countryOfIssuing) {
-        this.countryOfIssuing = countryOfIssuing;
-    }
-
-    public String getIssuingAuthority() {
-        return issuingAuthority;
-    }
-
-    public void setIssuingAuthority(String issuingAuthority) {
-        this.issuingAuthority = issuingAuthority;
-    }
-
-    public String getDateOfExpiryPrevious() {
-        return dateOfExpiryPrevious;
-    }
-
-    public void setDateOfExpiryPrevious(String dateOfExpiryPrevious) {
-        this.dateOfExpiryPrevious = dateOfExpiryPrevious;
     }
 
     public int getUserInfoID() {

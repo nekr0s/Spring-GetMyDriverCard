@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import nekr0s.project.card_users.models.clientmodel.ClientRequest;
@@ -46,6 +47,47 @@ public class Request {
     @Size(max = 30)
     private String requestDate;
 
+    @Column(name = "PreviousCountryOfIssuing")
+    @Size(max = 25)
+    private String previousCountryOfIssuing;
+
+    @Column(name = "PreviousIssuingAuthority")
+    @Size(max = 20)
+    private String previousIssuingAuthority;
+
+    @Column(name = "PreviousTachCardNum")
+    @Size(max = 25)
+    private String previousTachCardNum;
+
+    @Column(name = "PreviousDateOfExpiry")
+    @Size(min = 10, max = 10)
+    @Pattern(regexp = "^\\d+(\\.\\d+)*$")
+    private String previousDateOfExpiry;
+
+    @Column(name = "PreviousLostDate")
+    @Size(min = 10, max = 10)
+    private String previousLostDate;
+
+    @Column(name = "PreviousLostPlace")
+    @Size(max = 45)
+    private String previousLostPlace;
+
+    @Column(name = "CurrentCountryOfIssuing")
+    @Size(max = 25)
+    private String currentCountryOfIssuing;
+
+    @Column(name = "CurrentTachCardNum")
+    @Size(max = 25)
+    private String currentTachCardNum;
+
+    @Column(name = "CurrentDriverLicenseCountryOfIssuing")
+    @Size(max = 25)
+    private String currentDriverLicenseCountryOfIssuing;
+
+    @Column(name = "CurrentDriverLicenseNumber")
+    @Size(max = 25)
+    private String currentDriverLicenseNumber;
+
     @OneToOne()
     @JoinColumn(name = "Requests_AttachmentID", referencedColumnName = "AttachmentID")
     private Attachment attachment;
@@ -72,6 +114,16 @@ public class Request {
         this.requestType = clientRequest.getRequestType();
         this.requestStatus = clientRequest.getRequestStatus();
         this.user = new User(clientRequest.getUser());
+        this.previousCountryOfIssuing = clientRequest.getPreviousCountryOfIssuing();
+        this.previousDateOfExpiry = clientRequest.getPreviousDateOfExpiry();
+        this.previousIssuingAuthority = clientRequest.getPreviousIssuingAuthority();
+        this.previousLostDate = clientRequest.getPreviousLostDate();
+        this.previousLostPlace = clientRequest.getPreviousLostPlace();
+        this.previousTachCardNum = clientRequest.getPreviousTachCardNum();
+        this.currentCountryOfIssuing = clientRequest.getCurrentCountryOfIssuing();
+        this.currentDriverLicenseCountryOfIssuing = clientRequest.getCurrentDriverLicenseCountryOfIssuing();
+        this.currentDriverLicenseNumber = clientRequest.getCurrentDriverLicenseNumber();
+        this.currentTachCardNum = clientRequest.getCurrentTachCardNum();
     }
 
     public @NotNull RequestType getRequestType() {
@@ -128,5 +180,85 @@ public class Request {
 
     public void setRequestReason(RequestReason requestReason) {
         this.requestReason = requestReason;
+    }
+
+    public String getPreviousCountryOfIssuing() {
+        return previousCountryOfIssuing;
+    }
+
+    public void setPreviousCountryOfIssuing(String previousCountryOfIssuing) {
+        this.previousCountryOfIssuing = previousCountryOfIssuing;
+    }
+
+    public String getPreviousIssuingAuthority() {
+        return previousIssuingAuthority;
+    }
+
+    public void setPreviousIssuingAuthority(String previousIssuingAuthority) {
+        this.previousIssuingAuthority = previousIssuingAuthority;
+    }
+
+    public String getPreviousTachCardNum() {
+        return previousTachCardNum;
+    }
+
+    public void setPreviousTachCardNum(String previousTachCardNum) {
+        this.previousTachCardNum = previousTachCardNum;
+    }
+
+    public String getPreviousDateOfExpiry() {
+        return previousDateOfExpiry;
+    }
+
+    public void setPreviousDateOfExpiry(String previousDateOfExpiry) {
+        this.previousDateOfExpiry = previousDateOfExpiry;
+    }
+
+    public String getPreviousLostDate() {
+        return previousLostDate;
+    }
+
+    public void setPreviousLostDate(String previousLostDate) {
+        this.previousLostDate = previousLostDate;
+    }
+
+    public String getPreviousLostPlace() {
+        return previousLostPlace;
+    }
+
+    public void setPreviousLostPlace(String previousLostPlace) {
+        this.previousLostPlace = previousLostPlace;
+    }
+
+    public String getCurrentCountryOfIssuing() {
+        return currentCountryOfIssuing;
+    }
+
+    public void setCurrentCountryOfIssuing(String currentCountryOfIssuing) {
+        this.currentCountryOfIssuing = currentCountryOfIssuing;
+    }
+
+    public String getCurrentTachCardNum() {
+        return currentTachCardNum;
+    }
+
+    public void setCurrentTachCardNum(String currentTachCardNum) {
+        this.currentTachCardNum = currentTachCardNum;
+    }
+
+    public String getCurrentDriverLicenseCountryOfIssuing() {
+        return currentDriverLicenseCountryOfIssuing;
+    }
+
+    public void setCurrentDriverLicenseCountryOfIssuing(String currentDriverLicenseCountryOfIssuing) {
+        this.currentDriverLicenseCountryOfIssuing = currentDriverLicenseCountryOfIssuing;
+    }
+
+    public String getCurrentDriverLicenseNumber() {
+        return currentDriverLicenseNumber;
+    }
+
+    public void setCurrentDriverLicenseNumber(String currentDriverLicenseNumber) {
+        this.currentDriverLicenseNumber = currentDriverLicenseNumber;
     }
 }

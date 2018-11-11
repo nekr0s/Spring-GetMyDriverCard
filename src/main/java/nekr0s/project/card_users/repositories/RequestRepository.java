@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.enums.RequestStatus;
 
@@ -17,6 +19,7 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     Request getByRequestId(int requestId);
 
     @Modifying
-    @Query("update Request r set r.requestStatus = ?1 where r.requestId = ?2")
+    @Transactional
+    @Query("update Request r set r.requestStatus = ?2 where r.requestId = ?1")
     void setRequestStatusById(int requestId, RequestStatus requestStatus);
 }

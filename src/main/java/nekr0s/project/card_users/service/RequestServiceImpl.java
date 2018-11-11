@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import nekr0s.project.card_users.controllers.RequestController;
 import nekr0s.project.card_users.models.Request;
 import nekr0s.project.card_users.models.User;
 import nekr0s.project.card_users.models.UserInfo;
@@ -38,8 +37,8 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public ClientRequest getRequestById(int id) {
         Request request = requestRepository.getByRequestId(id);
-        ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository
-                .findByUserInfoUserId(request.getUser().getId()));
+        List<UserInfo> userInfos = userInfoRepository.findByUserInfoUserId(request.getUser().getId());
+        ClientUserInfo clientUserInfo = new ClientUserInfo(userInfos.get(userInfos.size() - 1));
         ClientUser clientUser = new ClientUser(clientUserInfo);
         return new ClientRequest(request, clientUser);
     }
@@ -48,7 +47,8 @@ public class RequestServiceImpl implements RequestService {
     public List<ClientRequest> getUserRequests(int userId) {
         List<ClientRequest> clientRequests = new ArrayList<>();
         for (Request request : requestRepository.getAllByUserId(userId)) {
-            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository.findByUserInfoUserId(userId));
+            List<UserInfo> userInfos = userInfoRepository.findByUserInfoUserId(userId);
+            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfos.get(userInfos.size() - 1));
             ClientUser clientUser = new ClientUser(clientUserInfo);
             clientRequests.add(new ClientRequest(request, clientUser));
         }
@@ -59,8 +59,8 @@ public class RequestServiceImpl implements RequestService {
     public List<ClientRequest> getAllRequests() {
         List<ClientRequest> clientRequests = new ArrayList<>();
         for (Request request : requestRepository.findAll()) {
-            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfoRepository
-                    .findByUserInfoUserId(request.getUser().getId()));
+            List<UserInfo> userInfos = userInfoRepository.findByUserInfoUserId(request.getUser().getId());
+            ClientUserInfo clientUserInfo = new ClientUserInfo(userInfos.get(userInfos.size() - 1));
             ClientUser clientUser = new ClientUser(clientUserInfo);
             clientRequests.add(new ClientRequest(request, clientUser));
         }
@@ -79,6 +79,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public void updateRequestStatus(int requestId, RequestStatus requestStatus) {
-        requestRepository.setRequestStatusById(requestId, requestStatus);
+        requestRepository.setRequestStatusById(requestId,
+                requestStatus);
     }
 }

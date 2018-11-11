@@ -2,6 +2,7 @@ package nekr0s.project.card_users.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/me")
     public @ResponseBody
-    User getCurrentUser(Principal principal) {
+    User getCurrentUser(Principal principal) throws UsernameNotFoundException {
         return (User) service.loadUserByUsername(principal.getName());
     }
 
